@@ -1,0 +1,24 @@
+local GameMT = getrawmetatable(game);
+setreadonly(GameMT, false);
+local GameIndex = GameMT.__index;
+local GameNamecall = GameMT.__namecall;
+ 
+local Player = game:GetService("Players").LocalPlayer;
+local Character = Player.Character or Player.CharacterAdded:Wait();
+ 
+if (Character) then
+  Character.ChildAdded:Connect(function(Child)
+      if (Child:IsA("Tool")) then
+          local Config = Child:FindFirstChild("Configuration");
+          if (Config) then
+              Config.ShotCooldown.Value = 0;
+              Config.ReloadTime.Value = 0;
+              Config.RecoilMin.Value = 0;
+              Config.RecoilMax.Value = 0;
+              Config.RecoilDecay.Value = 0;
+              Config.TotalRecoilMax.Value = 0;
+              Config.MaxSpread.Value = 0;
+          end;
+      end;
+  end);
+end;
